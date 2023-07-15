@@ -69,6 +69,10 @@ dependencies {
     def coil_version = "1.4.0"
     implementation "io.coil-kt:coil-compose:$coil_version"
 
+    //COMPOSE NAVIGATION
+    def navigation_version = "2.6.0"
+    implementation "androidx.navigation:navigation-compose:$navigation_version"
+
     //CONSTRAINT LAYOUT FOR COMPOSE
     def jetpack_constraint_layout_version = "1.0.1"
     implementation "androidx.constraintlayout:constraintlayout-compose:$jetpack_constraint_layout_version"
