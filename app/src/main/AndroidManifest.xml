@@ -17,7 +17,7 @@
         android:theme="@style/Theme.OompaLoompa"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".com.rubenpla.oompaloompa.ui.activity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.OompaLoompa">

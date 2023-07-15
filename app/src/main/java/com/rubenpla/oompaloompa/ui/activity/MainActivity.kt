@@ -1,4 +1,4 @@
-package com.rubenpla.oompaloompa
+package com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.ui.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,9 +10,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.HomeScreen
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.viewModel.EmployeeListViewModel
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.viewModel.HomeIntent
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.ui.naigation.Routes
 import com.rubenpla.oompaloompa.ui.theme.OompaLoompaTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,7 +34,20 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen(viewModel)
+                    val navigationController = rememberNavController()
+
+                    NavHost(
+                        navController = navigationController,
+                        startDestination = Routes.HomeScreen.route
+                    ) {
+                        composable(Routes.HomeScreen.route) {
+                            HomeScreen(
+                                viewModel = viewModel,
+                                navigationController = navigationController
+                            )
+                        }
+                        //TODO missing composable for EmployeeProfileScreen()
+                    }
                 }
             }
         }
