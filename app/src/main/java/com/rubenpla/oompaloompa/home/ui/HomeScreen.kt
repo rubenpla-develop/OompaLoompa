@@ -33,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberImagePainter
@@ -40,6 +41,7 @@ import com.rubenpla.oompaloompa.R
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.domain.entity.EmployeeResultsEntity
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.viewModel.EmployeeListViewModel
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.viewModel.HomeState
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.ui.naigation.Routes
 import com.rubenpla.oompaloompa.ui.common.HomeAppBar
 import com.rubenpla.oompaloompa.ui.theme.PurpleGrey40
 
@@ -74,9 +76,12 @@ fun WorkersGridList(
     val uiState = viewModel.state.collectAsState()
 
     when (uiState.value) {
-        is HomeState.InitialState -> {}
-        is HomeState.LoadingState -> {}
+        is HomeState.InitialState -> {
+            Log.i("HomeScreen", "InitialState")
+        }
+        is HomeState.LoadingState -> { Log.i("HomeScreen", "LoadingState") }
         is HomeState.EmployeeListData -> {
+            Log.i("HomeScreen", "EmployeeListData State")
             val employeeItems =
                 (uiState.value as HomeState.EmployeeListData).employees.collectAsLazyPagingItems()
             LazyVerticalGrid(
@@ -92,7 +97,7 @@ fun WorkersGridList(
                     employeeItems[itemIndex]?.let { employeeEntity ->
 
                         EmployeeItem(employee = employeeEntity) { id ->
-                           // navigationController.navigate(Routes.EmployeeProfile.createRoute(id.toString()))
+                            navigationController.navigate(Routes.EmployeeProfile.createRoute(id.toString()))
                         }
                     }
                 }

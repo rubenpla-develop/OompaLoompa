@@ -13,9 +13,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.HomeScreen
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.viewModel.EmployeeListViewModel
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.viewModel.HomeIntent
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.profile.ui.EmployeeDetailScreen
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.ui.naigation.DEFAULT_EMPLOYEE_ID
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.ui.naigation.EMPLOYEE_ID_PARAM_NAME
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.ui.naigation.Routes
 import com.rubenpla.oompaloompa.ui.theme.OompaLoompaTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +50,18 @@ class MainActivity : ComponentActivity() {
                                 navigationController = navigationController
                             )
                         }
-                        //TODO missing composable for EmployeeProfileScreen()
+
+                        composable(Routes.EmployeeProfile.route,
+                        arguments =  listOf(navArgument(EMPLOYEE_ID_PARAM_NAME) {
+                            defaultValue = DEFAULT_EMPLOYEE_ID
+                        })) { NavBackStackEntry ->
+
+                           EmployeeDetailScreen(
+                               employeeId = NavBackStackEntry.arguments?.getInt(
+                               EMPLOYEE_ID_PARAM_NAME)) {
+                               navigationController.navigate(Routes.HomeScreen.route)
+                           }
+                        }
                     }
                 }
             }
