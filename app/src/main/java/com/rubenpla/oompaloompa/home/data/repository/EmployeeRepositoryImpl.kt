@@ -1,12 +1,12 @@
 package com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.data.repository
 
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.data.DataSource
-import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.data.mapper.EmployeesMapper
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.data.mapper.ErrorMapper
-import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.remote.request.GetAllEmployeesRequest
-import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.domain.entity.EmployeesEntity
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.domain.entity.base.Record
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.data.mapper.EmployeesMapper
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.domain.entity.EmployeesEntity
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.domain.repository.EmployeeRepository
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.remote.request.GetAllEmployeesRequest
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.remote.RemoteException
 import javax.inject.Inject
 
