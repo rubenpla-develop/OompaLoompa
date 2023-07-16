@@ -1,4 +1,4 @@
-package com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.data
+package com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.data
 
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.remote.NetworkManager
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.remote.NetworkManagerImpl

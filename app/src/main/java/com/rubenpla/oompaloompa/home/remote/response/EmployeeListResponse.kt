@@ -1,4 +1,4 @@
-package com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.data.response
+package com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.remote.response
 
 import com.google.gson.annotations.SerializedName
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.domain.entity.EmployeeResultsEntity

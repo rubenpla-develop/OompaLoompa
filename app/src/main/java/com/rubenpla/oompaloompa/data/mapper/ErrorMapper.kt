@@ -1,8 +1,8 @@
-package com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.data.mapper
+package com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.data.mapper
 
 import android.util.Log
-import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.domain.entity.base.ErrorRecord
-import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.domain.entity.base.Record
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.domain.entity.base.ErrorRecord
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.domain.entity.base.Record
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.remote.RemoteException
 
 class ErrorMapper {

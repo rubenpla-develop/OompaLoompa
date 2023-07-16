@@ -1,4 +1,4 @@
-package com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.domain.entity.base
+package com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.domain.entity.base
 
 sealed class ErrorRecord {
     object ClientError: ErrorRecord()
