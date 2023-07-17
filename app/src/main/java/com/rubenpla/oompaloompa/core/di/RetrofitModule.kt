@@ -3,8 +3,8 @@ package com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.core.di
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.remote.retrofit.RetrofitApi
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.remote.ApiConstants
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.remote.retrofit.RetrofitApi
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.remote.retrofit.RetrofitInterceptor
 import dagger.Module
 import dagger.Provides

@@ -52,24 +52,37 @@ import com.rubenpla.oompaloompa.ui.theme.PurpleGrey40
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: EmployeeListViewModel) {
+fun HomeScreen(
+    viewModel: EmployeeListViewModel,
+    navigationController: NavHostController
+) {
     Scaffold(topBar = {
         HomeAppBar(title = stringResource(id = R.string.app_name),
             modifier = Modifier,
             openFilters = {})
     },
         content = { paddingValues ->
-            WorkersGridList(viewModel = viewModel, paddingValues = paddingValues)
+            WorkersGridList(
+                viewModel = viewModel,
+                paddingValues = paddingValues,
+                navigationController = navigationController
+            )
         })
 }
 
 @Composable
-fun WorkersGridList(viewModel: EmployeeListViewModel, paddingValues: PaddingValues) {
+fun WorkersGridList(
+    viewModel: EmployeeListViewModel,
+    paddingValues: PaddingValues,
+    navigationController: NavHostController
+) {
     val uiState = viewModel.state.collectAsState()
 
     when (uiState.value) {
-        is HomeState.InitialState -> {}
-        is HomeState.LoadingState -> {}
+        is HomeState.InitialState -> {
+            Log.i("HomeScreen", "InitialState")
+        }
+        is HomeState.LoadingState -> { Log.i("HomeScreen", "LoadingState") }
         is HomeState.EmployeeListData -> {
             val employeeItems =
                 (uiState.value as HomeState.EmployeeListData).employees.collectAsLazyPagingItems()
@@ -85,7 +98,9 @@ fun WorkersGridList(viewModel: EmployeeListViewModel, paddingValues: PaddingValu
 
                     employeeItems[itemIndex]?.let { employeeEntity ->
 
-                        EmployeeItem(employee = employeeEntity)
+                        EmployeeItem(employee = employeeEntity) { id ->
+                            navigationController.navigate(Routes.EmployeeProfile.createRoute(id.toString()))
+                        }
                     }
                 }
 
@@ -113,7 +128,10 @@ fun WorkersGridList(viewModel: EmployeeListViewModel, paddingValues: PaddingValu
 }
 
 @Composable
-fun EmployeeItem(employee: EmployeeResultsEntity) {
+fun EmployeeItem(
+    employee: EmployeeResultsEntity,
+    onEmployeeClick: (Int) -> Unit
+) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
         border = BorderStroke(2.dp, Color.DarkGray),
@@ -122,7 +140,10 @@ fun EmployeeItem(employee: EmployeeResultsEntity) {
             .clip(RoundedCornerShape(10.dp))
             .height(200.dp)
             .fillMaxWidth()
-            .clickable { Log.i("EmployeeItem", "Worker with id ${employee.id} clicked") }) {
+            .clickable {
+                Log.i("EmployeeItem", "Worker with id ${employee.id} clicked")
+                onEmployeeClick(employee.id.toInt())
+            }) {
         ConstraintLayout {
 
             val (name, gender, category, photo, spacerTop, spacerStart,
