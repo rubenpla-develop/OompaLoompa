@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">OompaLoompa</string>
+
+
+    <string name="content_description_top_app_bar_profession_filter_button">Profession Filter</string>
+    <string name="content_description_top_app_bar_gender_filter_button">Gender Filter</string>
 </resources>

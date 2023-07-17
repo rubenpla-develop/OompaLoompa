@@ -11,6 +11,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.rubenpla.oompaloompa.R
 import com.rubenpla.oompaloompa.ui.theme.PinkA400
 import com.rubenpla.oompaloompa.ui.theme.White
 
@@ -30,7 +32,7 @@ fun HomeAppBar(
             }) {
                 Icon(
                     imageVector = Icons.Filled.Work,
-                    contentDescription = "Profession Filter",
+                    contentDescription = stringResource(id = R.string.content_description_top_app_bar_profession_filter_button),
                     tint = White
                 )
             }
@@ -40,7 +42,7 @@ fun HomeAppBar(
             }) {
                 Icon(
                     imageVector = Icons.Filled.Person,
-                    contentDescription = "Gender Filter",
+                    contentDescription = stringResource(id = R.string.content_description_top_app_bar_gender_filter_button),
                     tint = White
                 )
             }
