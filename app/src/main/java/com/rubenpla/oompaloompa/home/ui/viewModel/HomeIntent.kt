@@ -4,4 +4,5 @@ import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.ui.base.ViewIntent
 
 sealed class HomeIntent: ViewIntent {
     object AllEmployees: HomeIntent()
+    object GetFilteredEmployees: HomeIntent()
 }

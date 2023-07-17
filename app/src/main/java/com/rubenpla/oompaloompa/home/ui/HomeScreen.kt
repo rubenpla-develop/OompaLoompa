@@ -9,22 +9,35 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Filter2
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -37,25 +50,38 @@ import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberImagePainter
 import com.rubenpla.oompaloompa.R
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.domain.filter.FilterType
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.domain.entity.EmployeeResultsEntity
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.viewModel.EmployeeListViewModel
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.viewModel.HomeIntent
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.viewModel.HomeState
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.ui.naigation.Routes
 import com.rubenpla.oompaloompa.ui.common.HomeAppBar
+import com.rubenpla.oompaloompa.ui.theme.PinkA700
 import com.rubenpla.oompaloompa.ui.theme.PurpleGrey40
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     viewModel: EmployeeListViewModel,
     navigationController: NavHostController
 ) {
+    var showModal by remember { mutableStateOf(false) }
+    var professionOrGenderFilter by remember { mutableStateOf(FilterType.NONE) }
+
     Scaffold(topBar = {
         HomeAppBar(title = stringResource(id = R.string.app_name),
             modifier = Modifier,
-            openFilters = {})
+            openProfessionFilter = {
+                showModal = !showModal
+                professionOrGenderFilter = FilterType.PROFESSION
+            },
+            openGenderFilter = {
+                showModal = !showModal
+                professionOrGenderFilter = FilterType.GENDER
+            })
     },
         content = { paddingValues ->
             WorkersGridList(
@@ -64,6 +90,47 @@ fun HomeScreen(
                 navigationController = navigationController
             )
         })
+
+    if (showModal) {
+        ModalBottomSheetLayout(
+            sheetContent = {
+                val list = when (professionOrGenderFilter) {
+                    FilterType.PROFESSION -> viewModel.getProfessionsFilter()
+                    FilterType.GENDER -> viewModel.getGenderFilters()
+                    else -> { viewModel.getProfessionsFilter() }
+                }
+
+                LazyColumn {
+                    items(list.size) { index ->
+                        Row(modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                            .clickable {
+                                showModal = false
+
+                                viewModel.dispatchIntentWithFilters(
+                                    HomeIntent.GetFilteredEmployees,
+                                    professionOrGenderFilter,
+                                    list[index].getFilterName()
+                                )
+                            }) {
+                            Icon(
+                                modifier = Modifier.padding(end = 8.dp),
+                                imageVector = Icons.Filled.Filter2,
+                                contentDescription = "Filter",
+                                tint = PinkA700
+                            )
+
+                            Text(text = list[index].getFilterName(), fontSize = 14.sp)
+                        }
+                    }
+                }
+            },
+            sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Expanded)
+        ) {
+            // Content of the screen
+        }
+    }
 }
 
 @Composable
@@ -78,7 +145,11 @@ fun WorkersGridList(
         is HomeState.InitialState -> {
             Log.i("HomeScreen", "InitialState")
         }
-        is HomeState.LoadingState -> { Log.i("HomeScreen", "LoadingState") }
+
+        is HomeState.LoadingState -> {
+            Log.i("HomeScreen", "LoadingState")
+        }
+
         is HomeState.EmployeeListData -> {
             Log.i("HomeScreen", "EmployeeListData State")
             val employeeItems =
