@@ -84,7 +84,7 @@ fun DescriptionBlock(employeeDetail: EmployeeDetailEntity?) {
                         },
                     text = "Show More",
                     fontWeight = FontWeight.Normal,
-                    fontSize = 16.sp,
+                    fontSize = 13.sp,
                     textDecoration = TextDecoration.Underline,
                     color = PinkA400
                 )
@@ -99,7 +99,7 @@ fun DescriptionBlock(employeeDetail: EmployeeDetailEntity?) {
                         },
                     text = "Show Less",
                     fontWeight = FontWeight.Normal,
-                    fontSize = 16.sp,
+                    fontSize = 13.sp,
                     textDecoration = TextDecoration.Underline,
                     color = PinkA400
                 )

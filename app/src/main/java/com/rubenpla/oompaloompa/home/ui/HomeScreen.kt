@@ -47,14 +47,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberImagePainter
+import coil.memory.MemoryCache
+import coil.request.CachePolicy
 import com.rubenpla.oompaloompa.R
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.domain.filter.FilterType
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.domain.entity.EmployeeResultsEntity
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.viewModel.EmployeeListViewModel
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.viewModel.HomeIntent
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.home.ui.viewModel.HomeState
+import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.ui.common.LoadingItem
 import com.rubenpla.oompaloompa.com.rubenpla.oompaloompa.ui.naigation.Routes
 import com.rubenpla.oompaloompa.ui.common.HomeAppBar
 import com.rubenpla.oompaloompa.ui.theme.PinkA700
@@ -171,6 +175,23 @@ fun WorkersGridList(
                         }
                     }
                 }
+
+                employeeItems.apply {
+                    when {
+                        loadState.refresh is LoadState.Loading -> {
+                            item { LoadingItem() }
+                            item { LoadingItem() }
+                        }
+
+                        loadState.append is LoadState.Loading -> {
+                            item { LoadingItem() }
+                            item { LoadingItem() }
+                        }
+
+                        loadState.refresh is LoadState.Error -> {}
+                        loadState.append is LoadState.Error -> {}
+                    }
+                }
             }
         }
 
@@ -206,6 +227,7 @@ fun EmployeeItem(
                 painter = rememberImagePainter(data = employee.image,
                     builder = {
                         placeholder(R.drawable.ic_employee_placeholder)
+                        memoryCachePolicy(CachePolicy.ENABLED)
                     }),
                 contentDescription = "Avatar",
                 contentScale = ContentScale.Crop,
