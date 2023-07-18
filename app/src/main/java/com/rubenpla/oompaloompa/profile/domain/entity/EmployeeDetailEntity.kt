@@ -13,11 +13,15 @@ data class EmployeeDetailEntity(
     val favorites: EmployeeFavoritesEntity,
     val gender: String = "",
     val email: String? = ""
-)
+) {
+    constructor() : this("", "", "", "", "", "", 84, "", 29, EmployeeFavoritesEntity(), "", "")
+}
 
 data class EmployeeFavoritesEntity(
     val color: String? = "",
     val food: String? = "",
     val randomText: String? = "",
     val song: String? = ""
-)
+) {
+    constructor() : this("", "", "", "")
+}
